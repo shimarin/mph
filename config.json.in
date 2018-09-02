@@ -1,0 +1,5 @@
+{
+  "mph_api_key":"YOUR_MPH_API_KEY",
+  "mph_user_id":123456,
+  "fixer_api_access_key":"YOUR_FIXER_API_ACCESS_KEY"
+}

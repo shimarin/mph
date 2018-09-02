@@ -1,0 +1,78 @@
+[
+  {
+    "name":"GTX1070Ti",
+    "performance":{
+      "ethereum":[26.7, 112],
+      "ethereum-classic":[26.7, 112],
+      "zcash":[405,113]
+    }
+  },
+  {
+    "name":"GTX1060",
+    "performance":{
+      "ethereum":[15,70],
+      "ethereum-classic":[15,70],
+      "bitcoin-gold":[20,60]
+    }
+  },
+  {
+    "name":"GTX1050Ti",
+    "performance":{
+      "ethereum":[12.3,60],
+      "ethereum-classic":[12.3,60],
+      "bitcoin-gold":[14,60]
+    }
+  },
+  {
+    "name":"RX570/580",
+    "performance":{
+      "ethereum":[21, 120],
+      "ethereum-classic":[21, 120],
+      "monero":[283,67]
+    }
+  },
+  {
+    "name":"RX460/560",
+    "performance":{
+      "ethereum":[11.1, 67],
+      "ethereum-classic":[11.1, 67],
+      "monero":[283,67]
+    }
+  },
+  {
+    "name":"Ryzen5 2600X",
+    "performance":{
+      "monero":[566,65]
+    }
+  },
+  {
+    "name":"Ryzen7 1700",
+    "performance":{
+      "monero":[477,56]
+    }
+  },
+  {
+    "name":"Ryzen5 1600",
+    "performance":{
+      "monero":[452,55]
+    }
+  },
+  {
+    "name":"Ryzen3 1200",
+    "performance":{
+      "monero":[243,40]
+    }
+  },
+  {
+    "name":"Ryzen3 2200G",
+    "performance":{
+      "monero":[157,36]
+    }
+  },
+  {
+    "name":"Core i7-6700",
+    "performance":{
+      "monero":[65,291.5]
+    }
+  }
+]
