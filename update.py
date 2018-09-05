@@ -74,6 +74,7 @@ if __name__ == '__main__':
     mph_user_id = config["mph_user_id"]
 
     workers = {}
+    total_daily_profit_yen = 0;
 
     for coin_name,coin in coins.iteritems():
         # pick the best power efficiency of the coin
@@ -94,7 +95,9 @@ if __name__ == '__main__':
             hashrate = hashrate_json["getuserhashrate"]["data"]
             if coin["algo"] == "Equihash-BTG": hashrate *= 1000
             coin["hashrate"] = hashrate
-            coin["daily_profit_yen"] = coin["daily_profit_yen_per_hashrate"] * hashrate
+            daily_profit_yen = coin["daily_profit_yen_per_hashrate"] * hashrate
+            coin["daily_profit_yen"] = daily_profit_yen
+            total_daily_profit_yen += daily_profit_yen
 
         _workers = load_data("worker-%s" % coin_name, "https://%s.miningpoolhub.com/index.php?page=api&action=getuserworkers&api_key=%s&id=%d" % (coin_name, mph_api_key, mph_user_id))
         if "getuserworkers" in _workers:
@@ -125,4 +128,4 @@ if __name__ == '__main__':
         worker["coins"].sort(key=itemgetter("daily_profit_yen"),reverse=True)
     workers.sort(key=itemgetter("daily_profit_yen"), reverse=True)
 
-    write_file_atomic(args.output, json.dumps({"btcjpy":btcjpy, "usdjpy":usdjpy, "coins":coins, "workers":workers}))
+    write_file_atomic(args.output, json.dumps({"btcjpy":btcjpy, "usdjpy":usdjpy, "coins":coins, "workers":workers, "daily_profit_yen":total_daily_profit_yen}))

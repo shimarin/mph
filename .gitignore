@@ -1,6 +1,7 @@
 balance-*.json
 eur.json
 hashrate-*.json
+mph-profit-stats.json
 mph.json
 worker-*.json
 config.json
