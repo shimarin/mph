@@ -59,7 +59,7 @@ if __name__ == '__main__':
             #else
             hashrate, wattage = performance
             algo = profit_stats[coin_name]["algo"]
-            daily_profit_yen_per_hashrate = profit_stats[coin_name]["profit"] * btcjpy / 1000000000.0
+            daily_profit_yen_per_hashrate = profit_stats[coin_name]["profit"] * btcjpy / 1000000.0
             if coin_name not in coins: coins[coin_name] = {"name":coin_name,"algo":algo,"price_yen":profit_stats[coin_name]["highest_buy_price"] * btcjpy,"daily_profit_yen_per_hashrate":daily_profit_yen_per_hashrate,"equipments":[]}
             if algo == "Ethash": hashrate *= 1000000 # it's MH/s
             daily_profit_yen = daily_profit_yen_per_hashrate * hashrate
