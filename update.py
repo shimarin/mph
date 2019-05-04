@@ -1,6 +1,7 @@
 #!/usr/bin/python2.7
-import os,uuid,json,time,argparse
+import os,uuid,json,time,argparse,contextlib
 import requests
+import sqlite3
 
 from operator import itemgetter
 
@@ -16,7 +17,7 @@ def should_download_new_file(filename, ttl_minutes = 60, self_filename = __file_
     if os.path.getmtime(self_filename) > mtime: return True
     return (time.time() - mtime) / 60 >= ttl_minutes
 
-def load_data(name, url = None, ttl_minutes = 60):
+def load_data(name, url = None, ttl_minutes = 10):
     filename = name + ".json"
     if url is not None and should_download_new_file(filename, ttl_minutes):
         r = requests.get(url)
@@ -24,6 +25,20 @@ def load_data(name, url = None, ttl_minutes = 60):
         return json.loads(r.content)
     #else
     return json.load(open(filename))
+
+def calc_earnings_24h(coin, transactions):
+    with contextlib.closing(sqlite3.connect("mph.db")) as conn:
+        c = conn.cursor()
+        c.execute("create table if not exists transactions(id int primary key,coin varchar(32) not null,t timestamp not null,amount float not null)")
+        c.execute("create index if not exists coin_idx on transactions(coin)")
+        c.execute("create index if not exists t_idx on transactions(t)")
+
+        for txn in transactions:
+            if txn["type"] != "Credit": continue
+            c.execute("insert or replace into transactions(id,coin,t,amount) values(?,?,?,?)", (txn["id"], coin,txn["timestamp"], txn["amount"]))
+
+        row = c.execute("select sum(amount) from transactions where t > datetime(current_timestamp, '-24 hours')").fetchone()
+        return row[0] if row is not None else 0.0
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -59,7 +74,7 @@ if __name__ == '__main__':
             #else
             hashrate, wattage = performance
             algo = profit_stats[coin_name]["algo"]
-            hashrate_scale = 1000.0 if algo == "Ethash" else 1.0 # It's MH/s in Ethash
+            hashrate_scale = 1000.0 if (algo == "Ethash" or algo == "X16r") else 1.0 # It's MH/s in Ethash/X16r
             daily_profit_yen_per_hashrate = profit_stats[coin_name]["profit"] * btcjpy * hashrate_scale / 1000000000.0
             if coin_name not in coins: coins[coin_name] = {"name":coin_name,"algo":algo,"price_yen":profit_stats[coin_name]["highest_buy_price"] * btcjpy,"daily_profit_yen_per_hashrate":daily_profit_yen_per_hashrate,"equipments":[]}
             if algo == "Ethash": hashrate *= hashrate_scale
@@ -116,6 +131,9 @@ if __name__ == '__main__':
                 })
                 num_active_workers += 1
             coin["num_active_workers"] = num_active_workers
+
+        transactions = load_data("transactions-%s" % coin_name, "https://%s.miningpoolhub.com/index.php?page=api&action=getusertransactions&api_key=%s&id=%d" % (coin_name, mph_api_key, mph_user_id))
+        coin["earnings_24h"] = calc_earnings_24h(coin_name, transactions["getusertransactions"]["data"]["transactions"])
 
     coins = coins.values()
     coins.sort(key=itemgetter("best_yen_per_kwh"), reverse=True)

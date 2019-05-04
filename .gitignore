@@ -4,6 +4,7 @@ hashrate-*.json
 mph-profit-stats.json
 mph.json
 worker-*.json
+transactions-*.json
 config.json
 
 # Byte-compiled / optimized / DLL files
@@ -110,3 +111,5 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+*.db

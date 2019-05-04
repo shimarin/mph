@@ -1,5 +1,12 @@
 [
   {
+    "name":"RTX2060",
+    "performance":{
+      "ethereum":[27.6,138],
+      "ethereum-classic":[27.6,138]
+    }
+  },
+  {
     "name":"GTX1070Ti",
     "performance":{
       "ethereum":[26.7, 112],
@@ -8,18 +15,41 @@
     }
   },
   {
+    "name":"GTX1660Ti",
+    "performance":{
+      "ethereum":[25.4,88],
+      "ethereum-classic":[25.4,88],
+      "bitcoin-gold":[29,86]
+    }
+  },
+  {
+    "name":"GTX1660",
+    "performance":{
+      "ethereum":[21.5,77],
+      "ethereum-classic":[21.5,77],
+      "ravencoin":[17,77]
+    }
+  },
+  {
     "name":"GTX1060",
     "performance":{
-      "ethereum":[15,70],
-      "ethereum-classic":[15,70],
+      "ethereum":[18,70],
+      "ethereum-classic":[18,70],
       "bitcoin-gold":[20,60]
+    }
+  },
+  {
+    "name":"GTX1650",
+    "performance":{
+      "ethereum":[14.3,46],
+      "ethereum-classic":[14.3,46]
     }
   },
   {
     "name":"GTX1050Ti",
     "performance":{
       "ethereum":[12.3,60],
-      "ethereum-classic":[12.3,60],
+      "ethereum-classic":[12.4,60],
       "bitcoin-gold":[14,60]
     }
   },
@@ -28,7 +58,13 @@
     "performance":{
       "ethereum":[21, 120],
       "ethereum-classic":[21, 120],
-      "monero":[283,67]
+      "monero":[551,67]
+    }
+  },
+  {
+    "name":"gpgpu1",
+    "performance":{
+      "monero":[890,180]
     }
   },
   {
@@ -36,7 +72,7 @@
     "performance":{
       "ethereum":[11.1, 67],
       "ethereum-classic":[11.1, 67],
-      "monero":[283,67]
+      "monero":[327,67]
     }
   },
   {
@@ -46,21 +82,27 @@
     }
   },
   {
+    "name":"Ryzen7 1800X",
+    "performance":{
+      "monero":[545,94]
+    }
+  },
+  {
     "name":"Ryzen7 1700",
     "performance":{
-      "monero":[477,56]
+      "monero":[465,60]
     }
   },
   {
     "name":"Ryzen5 1600",
     "performance":{
-      "monero":[452,55]
+      "monero":[404,66]
     }
   },
   {
     "name":"Ryzen3 1200",
     "performance":{
-      "monero":[243,40]
+      "monero":[238,58]
     }
   },
   {
