@@ -17,7 +17,7 @@ def should_download_new_file(filename, ttl_minutes = 60, self_filename = __file_
     if os.path.getmtime(self_filename) > mtime: return True
     return (time.time() - mtime) / 60 >= ttl_minutes
 
-def load_data(name, url = None, ttl_minutes = 10):
+def load_data(name, url = None, ttl_minutes = 15):
     filename = name + ".json"
     if url is not None and should_download_new_file(filename, ttl_minutes):
         r = requests.get(url)
@@ -134,6 +134,7 @@ if __name__ == '__main__':
 
         transactions = load_data("transactions-%s" % coin_name, "https://%s.miningpoolhub.com/index.php?page=api&action=getusertransactions&api_key=%s&id=%d" % (coin_name, mph_api_key, mph_user_id))
         coin["earnings_24h"] = calc_earnings_24h(coin_name, transactions["getusertransactions"]["data"]["transactions"])
+        coin["earnings_24h_yen"] = int(coin["earnings_24h"] * coin["price_yen"]) if coin["earnings_24h"] is not None else 0
 
     coins = coins.values()
     coins.sort(key=itemgetter("best_yen_per_kwh"), reverse=True)
