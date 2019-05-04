@@ -39,7 +39,7 @@ def calc_earnings_24h(coin, transactions):
 
         conn.commit()
 
-        row = c.execute("select sum(amount) from transactions where t > datetime(current_timestamp, '-24 hours')").fetchone()
+        row = c.execute("select sum(amount) from transactions where coin=? and t > datetime(current_timestamp, '-24 hours')", (coin,)).fetchone()
         return row[0] if row is not None else 0.0
 
 if __name__ == '__main__':
