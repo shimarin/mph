@@ -37,6 +37,8 @@ def calc_earnings_24h(coin, transactions):
             if txn["type"] != "Credit": continue
             c.execute("insert or replace into transactions(id,coin,t,amount) values(?,?,?,?)", (txn["id"], coin,txn["timestamp"], txn["amount"]))
 
+        conn.commit()
+
         row = c.execute("select sum(amount) from transactions where t > datetime(current_timestamp, '-24 hours')").fetchone()
         return row[0] if row is not None else 0.0
 
