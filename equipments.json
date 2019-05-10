@@ -70,8 +70,8 @@
   {
     "name":"RX460/560",
     "performance":{
-      "ethereum":[11.1, 67],
-      "ethereum-classic":[11.1, 67],
+      "ethereum":[10.3, 40],
+      "ethereum-classic":[10.3, 40],
       "monero":[327,67]
     }
   },
