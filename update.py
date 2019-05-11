@@ -52,7 +52,7 @@ if __name__ == '__main__':
     except:
         raise Exception("Error reading config.json.")
 
-    eur = load_data("eur", "http://data.fixer.io/api/latest?access_key=%s" % config["fixer_api_access_key"])
+    eur = load_data("eur", "http://data.fixer.io/api/latest?access_key=%s" % config["fixer_api_access_key"],60)
     if not eur["success"] or "rates" not in eur:
         raise Exception("Error in Fixer.io. check eur.json.")
 
@@ -92,7 +92,9 @@ if __name__ == '__main__':
     mph_user_id = config["mph_user_id"]
 
     workers = {}
-    total_daily_profit_yen = 0;
+    total_daily_profit_yen = 0
+    total_balance_yen = 0
+    total_earnings_24h_yen = 0
 
     for coin_name,coin in coins.iteritems():
         # pick the best power efficiency of the coin
@@ -108,6 +110,7 @@ if __name__ == '__main__':
             unconfirmed = balance["getuserbalance"]["data"]["unconfirmed"] * coin["price_yen"]
             coin["confirmed_balance_yen"] = confirmed
             coin["unconfirmed_balance_yen"] = unconfirmed
+            total_balance_yen += confirmed
         hashrate_json = load_data("hashrate-%s" % coin_name, "https://%s.miningpoolhub.com/index.php?page=api&action=getuserhashrate&api_key=%s&id=%d" % (coin_name, mph_api_key, mph_user_id))
         if "getuserhashrate" in hashrate_json:
             hashrate = hashrate_json["getuserhashrate"]["data"]
@@ -137,6 +140,7 @@ if __name__ == '__main__':
         transactions = load_data("transactions-%s" % coin_name, "https://%s.miningpoolhub.com/index.php?page=api&action=getusertransactions&api_key=%s&id=%d" % (coin_name, mph_api_key, mph_user_id))
         coin["earnings_24h"] = calc_earnings_24h(coin_name, transactions["getusertransactions"]["data"]["transactions"])
         coin["earnings_24h_yen"] = int(coin["earnings_24h"] * coin["price_yen"]) if coin["earnings_24h"] is not None else 0
+        total_earnings_24h_yen += coin["earnings_24h_yen"]
 
     coins = coins.values()
     coins.sort(key=itemgetter("best_yen_per_kwh"), reverse=True)
@@ -150,4 +154,4 @@ if __name__ == '__main__':
         worker["coins"].sort(key=itemgetter("daily_profit_yen"),reverse=True)
     workers.sort(key=itemgetter("daily_profit_yen"), reverse=True)
 
-    write_file_atomic(args.output, json.dumps({"btcjpy":btcjpy, "usdjpy":usdjpy, "coins":coins, "workers":workers, "daily_profit_yen":total_daily_profit_yen}))
+    write_file_atomic(args.output, json.dumps({"btcjpy":btcjpy, "usdjpy":usdjpy, "coins":coins, "workers":workers, "daily_profit_yen":total_daily_profit_yen, "balance_yen":total_balance_yen,"earnings_24h_yen":total_earnings_24h_yen}))
