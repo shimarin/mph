@@ -54,10 +54,17 @@
     }
   },
   {
+    "name":"GTX1030",
+    "performance":{
+      "bitcoin-gold":[5,38],
+      "ravencoin":[2.5,36]
+    }
+  },
+  {
     "name":"RX570/580",
     "performance":{
-      "ethereum":[21, 120],
-      "ethereum-classic":[21, 120],
+      "ethereum":[18.2, 80],
+      "ethereum-classic":[18.2, 80],
       "monero":[551,67]
     }
   },
@@ -115,6 +122,12 @@
     "name":"Core i7-6700",
     "performance":{
       "monero":[65,291.5]
+    }
+  },
+  {
+    "name":"Celeron G3900",
+    "performance":{
+      "monero":[13.7,24]
     }
   }
 ]

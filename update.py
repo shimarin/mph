@@ -34,7 +34,7 @@ def calc_earnings_24h(coin, transactions):
         c.execute("create index if not exists t_idx on transactions(t)")
 
         for txn in transactions:
-            if txn["type"] != "Credit" or txn["blockhash"] is None: continue
+            if txn["type"] not in ("Credit","Credit_AE") or txn["blockhash"] is None: continue
             c.execute("insert or replace into transactions(id,coin,t,amount) values(?,?,?,?)", (txn["id"], coin,txn["timestamp"], txn["amount"]))
 
         conn.commit()
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     for coin in mph_profit_stats["return"]:
         profit_stats[coin["coin_name"]] = coin
 
-    coins = {}
+    coins = {"bitcoin":{"name":"bitcoin","price_yen":profit_stats["bitcoin"]["highest_buy_price"] * btcjpy,"best_yen_per_kwh":100000}}
     for equipment in load_data("equipments"):
         for coin_name,performance in equipment["performance"].iteritems():
             if coin_name not in profit_stats:
@@ -112,7 +112,7 @@ if __name__ == '__main__':
             coin["unconfirmed_balance_yen"] = unconfirmed
             total_balance_yen += confirmed
         hashrate_json = load_data("hashrate-%s" % coin_name, "https://%s.miningpoolhub.com/index.php?page=api&action=getuserhashrate&api_key=%s&id=%d" % (coin_name, mph_api_key, mph_user_id))
-        if "getuserhashrate" in hashrate_json:
+        if "getuserhashrate" in hashrate_json and "algo" in coin:
             hashrate = hashrate_json["getuserhashrate"]["data"]
             if coin["algo"] == "Equihash-BTG": hashrate *= 1000
             coin["hashrate"] = hashrate
@@ -120,7 +120,7 @@ if __name__ == '__main__':
             coin["daily_profit_yen"] = daily_profit_yen
             total_daily_profit_yen += daily_profit_yen
 
-        _workers = load_data("worker-%s" % coin_name, "https://%s.miningpoolhub.com/index.php?page=api&action=getuserworkers&api_key=%s&id=%d" % (coin_name, mph_api_key, mph_user_id))
+        _workers = load_data("worker-%s" % coin_name, "https://%s.miningpoolhub.com/index.php?page=api&action=getuserworkers&api_key=%s&id=%d" % (coin_name, mph_api_key, mph_user_id)) if coin_name is not "bitcoin" else {}
         if "getuserworkers" in _workers:
             num_active_workers = 0
             for worker in _workers["getuserworkers"]["data"]:
