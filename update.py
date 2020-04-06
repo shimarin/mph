@@ -33,9 +33,10 @@ def calc_earnings_24h(coin, transactions):
         c.execute("create index if not exists coin_idx on transactions(coin)")
         c.execute("create index if not exists t_idx on transactions(t)")
 
-        for txn in transactions:
-            if txn["type"] not in ("Credit","Credit_AE") or txn["blockhash"] is None: continue
-            c.execute("insert or replace into transactions(id,coin,t,amount) values(?,?,?,?)", (txn["id"], coin,txn["timestamp"], txn["amount"]))
+	if transactions != False:
+            for txn in transactions:
+                if txn["type"] not in ("Credit","Credit_AE") or txn["blockhash"] is None: continue
+                c.execute("insert or replace into transactions(id,coin,t,amount) values(?,?,?,?)", (txn["id"], coin,txn["timestamp"], txn["amount"]))
 
         conn.commit()
 

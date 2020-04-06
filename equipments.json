@@ -7,14 +7,6 @@
     }
   },
   {
-    "name":"GTX1070Ti",
-    "performance":{
-      "ethereum":[26.7, 112],
-      "ethereum-classic":[26.7, 112],
-      "zcash":[405,113]
-    }
-  },
-  {
     "name":"GTX1660Ti",
     "performance":{
       "ethereum":[25.4,88],
@@ -27,7 +19,8 @@
     "performance":{
       "ethereum":[21.5,77],
       "ethereum-classic":[21.5,77],
-      "ravencoin":[17,77]
+      "ravencoin":[17,77],
+      "zclassic":[20,77]
     }
   },
   {
@@ -42,7 +35,8 @@
     "name":"GTX1650",
     "performance":{
       "ethereum":[14.3,46],
-      "ethereum-classic":[14.3,46]
+      "ethereum-classic":[14.3,46],
+      "zclassic":[11.1,62]
     }
   },
   {
@@ -56,36 +50,56 @@
   {
     "name":"GTX1030",
     "performance":{
-      "bitcoin-gold":[5,38],
+      "bitcoin-gold":[5.5,34],
       "ravencoin":[2.5,36]
+    }
+  },
+  {
+    "name":"RX5700XT",
+    "performance":{
+      "ethereum":[49.6, 115],
+      "ethereum-classic":[49.6, 115]
     }
   },
   {
     "name":"RX570/580",
     "performance":{
-      "ethereum":[18.2, 80],
-      "ethereum-classic":[18.2, 80],
-      "monero":[551,67]
+      "ethereum":[22.6, 100],
+      "ethereum-classic":[22.6, 100]
     }
   },
   {
-    "name":"gpgpu1",
+    "name":"ReinoGrabo",
     "performance":{
-      "monero":[890,180]
+      "ethereum":[26.6, 112],
+      "ethereum-classic":[26.6, 112]
+    }
+  },
+  {
+    "name":"sapporo-rack",
+    "performance":{
+      "ethereum":[77, 430],
+      "ethereum-classic":[77, 430],
+      "monero":[1805, 281]
     }
   },
   {
     "name":"RX460/560",
     "performance":{
       "ethereum":[10.3, 40],
-      "ethereum-classic":[10.3, 40],
-      "monero":[327,67]
+      "ethereum-classic":[10.3, 40]
+    }
+  },
+  {
+    "name":"Ryzen5 3600",
+    "performance":{
+      "monero":[5790,85]
     }
   },
   {
     "name":"Ryzen5 2600X",
     "performance":{
-      "monero":[566,65]
+      "monero":[3869,70.1234]
     }
   },
   {
@@ -97,19 +111,19 @@
   {
     "name":"Ryzen7 1700",
     "performance":{
-      "monero":[465,60]
+      "monero":[4037,70.1234]
     }
   },
   {
     "name":"Ryzen5 1600",
     "performance":{
-      "monero":[404,66]
+      "monero":[3600,80]
     }
   },
   {
     "name":"Ryzen3 1200",
     "performance":{
-      "monero":[238,58]
+      "monero":[238,69]
     }
   },
   {
@@ -119,9 +133,15 @@
     }
   },
   {
+    "name":"Core i7-7700K",
+    "performance":{
+      "monero":[300, 82]
+    }
+  },
+  {
     "name":"Core i7-6700",
     "performance":{
-      "monero":[65,291.5]
+      "monero":[291.5,65]
     }
   },
   {
